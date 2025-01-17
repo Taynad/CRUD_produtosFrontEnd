@@ -1,7 +1,7 @@
 *{
     margin: 0px;
     padding: 0px;
-    font-family: "Poppins";
+    font-family: "Poppins", sans-serif ;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
@@ -94,7 +94,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: bolder;
+    font-weight: 600;
     font-size: 24px;
 }
 
@@ -190,7 +190,7 @@ body{
 .btn_formCancel:hover{
     background-color: #951111;
     color: #FFDEDE;
-    transform: scale(1.05);
+    transform: scale(1.15);
 }
 
 .btn_addProduct{
@@ -209,7 +209,7 @@ body{
 
 .main_header .btn_addProduct{
     font-size: 20px;
-    font-weight: bolder;
+    font-weight: 600;
     padding: 10px;
 }
 
@@ -233,6 +233,62 @@ body{
     display: none; 
     z-index: 1000; 
 }
+
+.btn_aside{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px;
+    background-color: white;
+    border: none;
+    transition: fill 0.3s ease, transform 0.2s;
+
+}
+
+.btn_aside svg{
+    fill: #FF8F1F;
+    transition: fill 0.3s ease, transform 0.2s; 
+}
+
+.btn_aside:hover svg{
+    fill: #d66c02;
+    transform: scale(1.15);
+}
+
+table {
+    width: 96%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    margin-left: 25px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+th:first-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+th:last-child {
+    border-top-right-radius: 10px;  
+    border-bottom-right-radius: 10px;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+
+
 
 
 
