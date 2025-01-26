@@ -69,31 +69,32 @@
                 </header>
                 <hr class="content_separation">
 
+
                 <div id="overlay"></div>
                     <section class="popup_registerProduct" id="popup_registerProduct">
                         <header class="form_header">
                             <h2>Adiocionar Produto</h2>
                         </header>
                         <hr class="content_separation">
-                        <form>
+                        <form id="product-form" data-id="">
                             <div class="below">
                                 <div>
-                                    <label for="nome">Nome <span class="mandatory">*</span></label>
+                                    <label for="input_name">Nome <span class="mandatory">*</span></label>
                                     <input type="text" required class="input_name" id="input_name">
                                 </div>
                                 <div>
-                                    <label for="descricao">Descrição <span class="mandatory">*</span></label>
+                                    <label for="input_description">Descrição <span class="mandatory">*</span></label>
                                     <input type="text" required class="input_description" id="input_description">
                                 </div>
                             </div>
 
                             <div class="side">
                                 <div>
-                                    <label for="categoria">Categoria <span class="mandatory">*</span></label>
+                                    <label for="input_category">Categoria <span class="mandatory">*</span></label>
                                     <input type="text" required class="input_category" id="input_category">
                                 </div>
                                 <div>
-                                    <label for="quantidade">Quantidade <span class="mandatory">*</span></label>
+                                    <label for="input_amount">Quantidade <span class="mandatory">*</span></label>
                                     <input type="" required class="input_amount" id="input_amount">
                                 </div>
                             </div>
@@ -104,7 +105,7 @@
                                 <button type="submit" class="btn_addProduct" id="btn_formProduct">Adiocionar produto</button>
 
                             </div>
-
+                            <div id="feedback-message"></div>
                         </form>
                     </section>
 
@@ -130,5 +131,6 @@
     </main>
 
     <script src="JavaScript/popup.js"></script>
+    <script src="JavaScript/crud.js"></script>
 </body>
 </html>

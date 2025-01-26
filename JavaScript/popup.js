@@ -13,3 +13,4 @@ btn_cancel.onclick = function(){
     popup_register.style.display = "none";
     overlay.style.display = "none";
 }
+
