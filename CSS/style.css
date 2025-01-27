@@ -68,6 +68,7 @@ body{
     margin-top: 50px;
     width: 80vw;
     height: 80vh;
+    overflow-y: auto;
 }
 
 .main_header{
@@ -270,6 +271,9 @@ th, td {
 }
 
 th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
     background-color: #f2f2f2;
     font-weight: bold;
     font-size: 20px;
@@ -332,9 +336,7 @@ tr:hover {
     font-weight: bold;
     font-size: 20px;
     display: none;
-    width: 180px;
-    height: 30px;
-    margin-left: 150px;
+   
 }
 
 .success {

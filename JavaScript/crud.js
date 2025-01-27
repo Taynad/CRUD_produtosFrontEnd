@@ -22,7 +22,7 @@ async function listProduct(){
                 <td>${product.descricao}</td>
                 <td>${product.categoria}</td>
                 <td>${product.quantidade}</td>
-                <td>  <button class="edit-btn" data-id="${product.id}">
+                <td>  <button class="edit-btn" data-id="${product.id}" id="btn-edit">
                 <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04ZM3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25Z"/>
                 </svg>
@@ -36,6 +36,10 @@ async function listProduct(){
             `;
 
             tableProduct.appendChild(row);
+            const editButton = row.querySelector('.edit-btn');
+            editButton.addEventListener('click', () => {
+                openEditPopup(product);
+            });
         });
     }catch(error){
         console.error("Error", error);
@@ -71,7 +75,8 @@ async function saveProduct(event){
         }
 
         const result = await response.json();
-        showFeedbackMenssage(result.message, result.type)
+        console.log("Resposta da API:", JSON.stringify(result, null, 2));
+        showFeedbackMenssage(result.message, result.type);
     }catch(error){
         console.error("Erro ao conectar a API", error)
         showFeedbackMenssage(error.message, "error")
@@ -83,7 +88,7 @@ async function saveProduct(event){
 function cancelForm(event) {
     event.preventDefault();
     document.getElementById('product-form').reset(); // Limpa o formulário
-    showFeedbackMessage("Operação cancelada", "sucess");
+    showFeedbackMessage("Operação cancelada", "success");
 }
 
 // Adiciona o evento de submit ao formulário
@@ -99,6 +104,9 @@ document.getElementById('product-form').addEventListener('submit', function (eve
         cancelForm(event); // Executa a função de cancelar
     }
 });
+
+
+
 
 
 function showFeedbackMenssage(message, type = 'success'){
