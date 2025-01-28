@@ -79,25 +79,23 @@
                         <form id="product-form" data-id="">
                             <div class="below">
                                 <div>
-                                    <label>Código</label>
-                                    <input type="text" id="input_id" name="input_id" readonly>
                                     <label for="input_name">Nome <span class="mandatory">*</span></label>
-                                    <input type="text" required class="input_name" id="input_name">
+                                    <input type="text" required class="input_name" id="input_name" name="nome">
                                 </div>
                                 <div>
                                     <label for="input_description">Descrição <span class="mandatory">*</span></label>
-                                    <input type="text" required class="input_description" id="input_description">
+                                    <input type="text" required class="input_description" id="input_description" name="descricao">
                                 </div>
                             </div>
 
                             <div class="side">
                                 <div>
                                     <label for="input_category">Categoria <span class="mandatory">*</span></label>
-                                    <input type="text" required class="input_category" id="input_category">
+                                    <input type="text" required class="input_category" id="input_category" name="categoria">
                                 </div>
                                 <div>
                                     <label for="input_amount">Quantidade <span class="mandatory">*</span></label>
-                                    <input type="" required class="input_amount" id="input_amount">
+                                    <input type="" required class="input_amount" id="input_amount" name="Quantidade">
                                 </div>
                             </div>
 
@@ -109,6 +107,7 @@
                             </div>
                             <div id="feedback-message"></div>
                         </form>
+
                     </section>
 
                     <table>
@@ -128,12 +127,54 @@
 
                         </tbody>
                     </table>
+
+                    <div id="overlayEdit"></div>
+                    <section class="popup_registerProduct" id="popup_edit">
+                        <header class="form_header">
+                            <h2>Atualizar Produto</h2>
+                        </header>
+                        <hr class="content_separation">
+                        <form id="form_edit" data-id="">
+                            <div class="below">
+                                <div>
+                                    <label>Código</label>
+                                    <input type="text" id="input_id" name="id" readonly>
+                                    <label for="input_name">Nome <span class="mandatory">*</span></label>
+                                    <input type="text" required class="input_name" id="input_Editname" name="nome">
+                                </div>
+                                <div>
+                                    <label for="input_description">Descrição <span class="mandatory">*</span></label>
+                                    <input type="text" required class="input_description" id="input_Editdescription" name="descricao">
+                                </div>
+                            </div>
+
+                            <div class="side">
+                                <div>
+                                    <label for="input_category">Categoria <span class="mandatory">*</span></label>
+                                    <input type="text" required class="input_category" id="input_Editcategory" name="categoria">
+                                </div>
+                                <div>
+                                    <label for="input_amount">Quantidade <span class="mandatory">*</span></label>
+                                    <input type="" required class="input_amount" id="input_Editamount" name="Quantidade">
+                                </div>
+                            </div>
+
+                            <div class="btn_form">
+                                <button type="submit" class="btn_formCancel" id="btn_Editcancel">Cancelar</button>
+
+                                <button type="submit" class="btn_addProduct" id="btn_EditformProduct">Atualizar produto</button>
+
+                            </div>
+                            <div id="feedback-message"></div>
+                        </form>
+                    </section>
             </div>
         </div>
     </main>
 
-    <script src="JavaScript/popup.js"></script>
-    <script src="JavaScript/crud.js"></script>
     <script src="JavaScript/putResquest.js"></script>
+    <script src="JavaScript/popup.js"></script>
+    <script type="module" src="JavaScript/crud.js"></script>
+    
 </body>
 </html>

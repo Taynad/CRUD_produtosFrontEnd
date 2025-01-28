@@ -113,8 +113,22 @@ body{
     transform: translate(-50%, -50%);
     z-index: 1000; 
     position: fixed;
+    display: none; 
+}  
+
+#popup_edit{
+    background-color: white;
+    height: 65%;
+    width: 28%;
+    margin: 20px;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.151);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000; 
+    position: fixed;
     display: none;
-    
     
 }  
 
@@ -236,6 +250,18 @@ body{
     display: none; 
     z-index: 1000; 
 }
+
+#overlayEdit{
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.288); 
+    display: none; 
+    z-index: 1000; 
+}
+
 
 .btn_aside{
     display: flex;
