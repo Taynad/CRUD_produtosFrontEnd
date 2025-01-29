@@ -22,23 +22,32 @@ function openEditPopup(product){
     });
 }
 
-const editForm = document.getElementById('form_edit');
 
-editForm.addEventListener('submit', async (event)=> {
-    event.preventDefault();
+
+async function putResquest(){
     const id = document.getElementById('input_id').value;
     const nome = document.getElementById('input_Editname').value;
     const descricao = document.getElementById('input_Editdescription').value;
-    const categoria = document.getElementById('input_category').value;
-    const quantidade = document.getElementById('input_Editamount').value;
+    const categoria = document.getElementById('input_Editcategory').value;
+    const quantidade = parseInt(document.getElementById('input_Editamount').value, 10);
+
+    console.log("ID do produto:", id);
+
+    if (!id) {
+        console.error("Erro: ID do produto não encontrado.");
+        showFeedbackMenssage("Erro: Produto inválido.", "error");
+        return;
+    }
 
     //cria o corpo da requisição
     const updateProduct={
         nome,
         descricao,
         categoria,
-        quantidade,
+        quantidade: parseInt(quantidade, 10),
     };
+
+    console.log("Corpo da requisição:", updateProduct);
 
     try{
         //fazendo a requisição
@@ -49,14 +58,15 @@ editForm.addEventListener('submit', async (event)=> {
         });
 
         if(response.ok){
+            const updatedProductData = await response.json();
+            console.log('Produto atualizado com sucesso:', updatedProductData);
             showFeedbackMenssage(response.message, response.type)
+
             document.getElementById('popup_edit').style.display = 'none';
             document.getElementById('overlayEdit').style.display = 'none';
 
             // Atualiza a tabela para refletir as mudanças
-            const updatedProductData = await response.json();
-            console.log('Produto atualizado com sucesso:', updatedProductData);
-            listProduct();
+            await listProduct();
         }else{
             const error = await response.json();
             console.error = ('Erro ao atualizar produto', error)
@@ -64,11 +74,16 @@ editForm.addEventListener('submit', async (event)=> {
         }
     }catch(error){
         console.error('Erro na requisição', error);
-        showFeedbackMenssage(error, error);
+        showFeedbackMenssage('Erro ao conectar com o servidor', error);
 
     }
-})
+}
 
+// Evento de submit no formulário
+document.getElementById("btn_EditformProduct").addEventListener("submit", (event) => {
+    event.preventDefault();
+    putResquest();
+});
 
 async function listProduct(){
     try{
