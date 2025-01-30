@@ -357,12 +357,33 @@ tr:hover {
     align-items: center;
     text-align: center;
     padding: 20px;
-    margin-top: 35px;
+    margin-bottom: 35px;
     border-radius: 5px;
     font-weight: bold;
     font-size: 20px;
-    display: none;
-   
+    position: fixed;
+    bottom: 20px; /* Fixa a mensagem na parte inferior */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999; /* Garante que fique acima de outros elementos */
+    display: none; 
+}
+
+.feedback-message{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 35px; /* Ajuste de margem para garantir que fique visível na parte inferior */
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 20px;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
 }
 
 .success {

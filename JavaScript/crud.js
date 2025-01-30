@@ -19,15 +19,20 @@ const inputEditDescription = document.getElementById("input_Editdescription");
 const inputEditCategory = document.getElementById("input_Editcategory");
 const inputEditAmount = document.getElementById("input_Editamount");
 
-// Função para exibir mensagens de feedback
-function showFeedbackMessage(message, type = "success") {
-    const feedbackElement = document.getElementById("feedback-message");
+function showFeedbackMessage(message, type = 'success'){
+    //obtendo o elemento do html
+    const feedbackElement = document.getElementById('feedback-message');
+    //define o texto da mensagem a ser exibida
     feedbackElement.textContent = message;
+    //modifica a classe para incluir o tipo de classe do css se é error ou sucess
     feedbackElement.className = `feedback-message ${type}`;
-    feedbackElement.style.display = "block";
-    setTimeout(() => {
-        feedbackElement.style.display = "none";
-    }, 5000);
+    //exibe o elemento com o block
+    feedbackElement.style.display = 'flex';
+    //função para criar um temporizador que vai executar a função, altera para none tornando invisivel
+    //isso cria o efeito da mensagem desaparecer depois de 5 segundos
+    setTimeout(() =>{
+        feedbackElement.style.display = 'none';
+    }, 10000);
 }
 
 // Função para carregar os produtos na tabela
@@ -78,41 +83,20 @@ async function loadProducts() {
 }
 
 // Função para abrir o popup de edição
-async function openEditPopup(productId) {
-    
-    // Exibe o popup de edição
+async function openEditPopup(product) {
+    // Preenche os campos do formulário com os dados do produto
+    document.getElementById("input_id").value = product.id;
+    document.getElementById("input_Editname").value = product.nome;
+    document.getElementById("input_Editdescription").value = product.descricao;
+    document.getElementById("input_Editcategory").value = product.categoria;
+    document.getElementById("input_Editamount").value = product.quantidade;
+
+    // Exibe o popup e o overlay
     document.getElementById("popup_edit").style.display = "block";
     document.getElementById("overlayEdit").style.display = "block";
-
-    try {
-        const response = await fetch(`${API_URL}/${productId}`);
-        const product = await response.json();
-
-        console.log("Dados do produto:", product);
-
-        // Preenche o formulário de edição com os dados do produto
-        inputEditId.value = product.id;
-        inputEditName.value = product.nome;
-        inputEditDescription.value = product.descricao;
-        inputEditCategory.value = product.categoria;
-        inputEditAmount.value = product.quantidade;
-
-    } catch (error) {
-        showFeedbackMessage("Erro ao carregar produto para edição.", "error");
-        console.error(error);
-    }
 }
 
-// Adiciona eventos aos botões de edição
-document.addEventListener("DOMContentLoaded", () => {
-    const editButtons = document.querySelectorAll(".btn-edit");
-    editButtons.forEach((button) => {
-        button.addEventListener("click", () => {
-            const productId = button.getAttribute("data-id"); // Obtém o ID do produto
-            openEditPopup(productId); // Abre o popup de edição
-        });
-    });
-});
+
 
 // Função para adicionar um produto
 async function addProduct(event) {
@@ -134,15 +118,25 @@ async function addProduct(event) {
             body: JSON.stringify(product),
         });
 
+        const data = await response.json();
+        console.log("Resposta do servidor:", data);
+
         if (response.ok) {
-            showFeedbackMessage("Produto adicionado com sucesso!", "success");
-            loadProducts();
-            productForm.reset();
-            document.getElementById("popup_registerProduct").style.display = "none";
-            document.getElementById("overlay").style.display = "none";
+            showFeedbackMessage(data.message, data.type);
         } else {
             showFeedbackMessage("Erro ao adicionar produto.", "error");
         }
+
+        setTimeout(() => {
+            // Carregar produtos e resetar o formulário
+            loadProducts();
+            productForm.reset();
+    
+            // Fechar o popup
+            document.getElementById("popup_registerProduct").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }, 3000);
+
     } catch (error) {
         showFeedbackMessage("Erro ao adicionar produto.", "error");
         console.error(error);
@@ -161,6 +155,8 @@ async function updateProduct(event) {
         quantidade: inputEditAmount.value,
     };
 
+    console.log("Produto a ser atualizado:", product);
+
     try {
         const response = await fetch(`${API_URL}/${product.id}`, {
             method: "PUT",
@@ -170,8 +166,9 @@ async function updateProduct(event) {
             body: JSON.stringify(product),
         });
 
+        const data = await response.json();
         if (response.ok) {
-            showFeedbackMessage("Produto atualizado", "success");
+            showFeedbackMessage(data.message, data.type);
             loadProducts();
             document.getElementById("popup_edit").style.display = "none";
             document.getElementById("overlayEdit").style.display = "none";
@@ -192,8 +189,10 @@ async function deleteProduct(productId) {
                 method: "DELETE",
             });
 
+            const data = await response.json();
+
             if (response.ok) {
-                showFeedbackMessage("Produto excluído com sucesso!");
+                showFeedbackMessage(data.message, data.type);
                 loadProducts();
             } else {
                 showFeedbackMessage("Erro ao excluir produto.", "error");
