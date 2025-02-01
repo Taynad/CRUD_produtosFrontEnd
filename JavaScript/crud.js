@@ -51,7 +51,8 @@ async function loadProducts() {
                 <td>${product.categoria}</td>
                 <td>${product.quantidade}</td>
                 <td>
-                    <button class="btn-edit" data-id="${product.id}">
+                    <button class="btn-edit" data-id="${product.id}" data-nome="${product.nome}" 
+                    data-descricao="${product.descricao}" data-categoria="${product.categoria}" data-quantidade="${product.quantidade}">
                         <svg width="35" height="35" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M20.71 7.04C21.1 6.65 21.1 6.02 20.71 5.63L18.37 3.29C17.98 2.9 17.35 2.9 16.96 3.29L15.13 5.12L18.88 8.87L20.71 7.04ZM3 17.25V21H6.75L17.81 9.94L14.06 6.19L3 17.25Z"/>
                         </svg>
@@ -68,35 +69,50 @@ async function loadProducts() {
             tableBody.appendChild(row);
         });
 
-        // Adiciona eventos aos botões de editar e excluir
-        document.querySelectorAll(".btn-edit").forEach((button) => {
-            button.addEventListener("click", () => openEditPopup(button.dataset.id));
-        });
+        document.querySelectorAll(".btn-edit").forEach(button => {
+            button.addEventListener("click", () => {
+                const product = {
+                    id: button.getAttribute("data-id"),
+                    nome: button.getAttribute("data-nome"),
+                    descricao: button.getAttribute("data-descricao"),
+                    categoria: button.getAttribute("data-categoria"),
+                    quantidade: button.getAttribute("data-quantidade"),
+                };
+                openEditPopup(product);
+            });
+        }); 
 
-        document.querySelectorAll(".btn-delete").forEach((button) => {
+        document.querySelectorAll(".btn-delete").forEach(button => {
             button.addEventListener("click", () => deleteProduct(button.dataset.id));
         });
-    } catch (error) {
-        showFeedbackMessage("Erro ao carregar produtos.", "error");
-        console.error(error);
-    }
+}catch(error){
+    console.log(error)
+    showFeedbackMessage("Erro ao carregar produtos.", "error");
+
+}
 }
 
 // Função para abrir o popup de edição
-async function openEditPopup(product) {
-    // Preenche os campos do formulário com os dados do produto
-    document.getElementById("input_id").value = product.id;
-    document.getElementById("input_Editname").value = product.nome;
-    document.getElementById("input_Editdescription").value = product.descricao;
-    document.getElementById("input_Editcategory").value = product.categoria;
-    document.getElementById("input_Editamount").value = product.quantidade;
+function openEditPopup(product) {
 
+    console.log("Produto no openEditPopup:", product);
+    console.log("Id do produto:", product.id);
+    console.log("Nome do produto:", product.nome);
+    console.log("Descrição do produto:", product.descricao);
+    console.log("Categoria do produto:", product.categoria);
+    console.log("Quantidade do produto:", product.quantidade);
+    // Preenche os campos do formulário com os dados do produto
+    inputEditId.value = product.id;
+    inputEditName.value = product.nome;
+    inputEditDescription.value = product.descricao;
+    inputEditCategory.value = product.categoria;
+    inputEditAmount.value = product.quantidade;
+    
     // Exibe o popup e o overlay
     document.getElementById("popup_edit").style.display = "block";
     document.getElementById("overlayEdit").style.display = "block";
+    
 }
-
-
 
 // Função para adicionar um produto
 async function addProduct(event) {
@@ -147,6 +163,11 @@ async function addProduct(event) {
 async function updateProduct(event) {
     event.preventDefault();
 
+    if (!inputEditId.value) {
+        showFeedbackMessage("ID do produto não encontrado.", "error");
+        return;
+    }
+
     const product = {
         id: inputEditId.value,
         nome: inputEditName.value,
@@ -156,6 +177,7 @@ async function updateProduct(event) {
     };
 
     console.log("Produto a ser atualizado:", product);
+    console.log("URL da requisição:", `${API_URL}/${product.id}`);
 
     try {
         const response = await fetch(`${API_URL}/${product.id}`, {
@@ -167,6 +189,8 @@ async function updateProduct(event) {
         });
 
         const data = await response.json();
+        console.log("Resposta da API:", data);
+
         if (response.ok) {
             showFeedbackMessage(data.message, data.type);
             loadProducts();
@@ -180,6 +204,24 @@ async function updateProduct(event) {
         console.error(error);
     }
 }
+document.getElementById("btn_EditformProduct").addEventListener("click", updateProduct);
+
+document.getElementById("form_edit").addEventListener("click", (event) => {
+    event.preventDefault(); // Impede o comportamento padrão do formulário
+});
+
+// Adiciona o evento de clique ao botão de cancelar
+document.getElementById("btn_Editcancel").addEventListener("click", (event) => {
+    event.preventDefault();
+    document.getElementById("popup_edit").style.display = "none";
+    document.getElementById("overlayEdit").style.display = "none";
+});
+
+// Adiciona o evento de clique ao overlay para fechar o popup
+document.getElementById("overlayEdit").addEventListener("click", () => {
+    document.getElementById("popup_edit").style.display = "none";
+    document.getElementById("overlayEdit").style.display = "none";
+});
 
 // Função para excluir um produto
 async function deleteProduct(productId) {
