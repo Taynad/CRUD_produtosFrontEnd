@@ -362,10 +362,10 @@ tr:hover {
     font-weight: bold;
     font-size: 20px;
     position: fixed;
-    bottom: 20px; /* Fixa a mensagem na parte inferior */
+    bottom: 20px; 
     left: 50%;
     transform: translateX(-50%);
-    z-index: 9999; /* Garante que fique acima de outros elementos */
+    z-index: 9999; 
     display: none; 
 }
 
@@ -375,7 +375,7 @@ tr:hover {
     align-items: center;
     text-align: center;
     padding: 20px;
-    margin-bottom: 35px; /* Ajuste de margem para garantir que fique visível na parte inferior */
+    margin-bottom: 35px; 
     border-radius: 5px;
     font-weight: bold;
     font-size: 20px;
@@ -396,6 +396,77 @@ tr:hover {
     color: #721c24;
 }
 
+.popup_delete{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 30px;
+    padding: 30px;
+    background-color: white;
+    height: 150px;
+    border-radius: 5px;
+    
+}
+.popup_delete p{
+    font-weight: 700;
+    font-size: 20px;
+}
+.btn_delete{
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn_yes{
+    width: 100px;
+    height: 40px;
+    background-color: #d4edda;
+    color: #155724;
+    border: none;
+    font-weight: 700;
+    font-size: 18px;
+    transform: scale(1.15);
+    border-radius: 5px;
+}
+.btn_yes:hover{
+    background-color: #155724;
+    color: #d4edda;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn_no{
+    width: 100px;
+    height: 40px;
+    background-color: #f8d7da;
+    color: #721c24;
+    border: none;
+    font-weight: 700;
+    font-size: 18px;
+    transform: scale(1.15);
+    border-radius: 5px;
+}
+
+.btn_no:hover{
+    background-color: #721c24;
+    color: #f8d7da;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+
+#overlay_delete{
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.288); 
+    display: none; 
+    z-index: 1000; 
+}
 
 
 

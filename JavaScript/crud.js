@@ -32,7 +32,7 @@ function showFeedbackMessage(message, type = 'success'){
     //isso cria o efeito da mensagem desaparecer depois de 5 segundos
     setTimeout(() =>{
         feedbackElement.style.display = 'none';
-    }, 10000);
+    }, 3000);
 }
 
 // Função para carregar os produtos na tabela
@@ -151,7 +151,7 @@ async function addProduct(event) {
             // Fechar o popup
             document.getElementById("popup_registerProduct").style.display = "none";
             document.getElementById("overlay").style.display = "none";
-        }, 3000);
+        }, 2000);
 
     } catch (error) {
         showFeedbackMessage("Erro ao adicionar produto.", "error");
@@ -207,7 +207,7 @@ async function updateProduct(event) {
 document.getElementById("btn_EditformProduct").addEventListener("click", updateProduct);
 
 document.getElementById("form_edit").addEventListener("click", (event) => {
-    event.preventDefault(); // Impede o comportamento padrão do formulário
+    event.preventDefault();
 });
 
 // Adiciona o evento de clique ao botão de cancelar
@@ -225,25 +225,44 @@ document.getElementById("overlayEdit").addEventListener("click", () => {
 
 // Função para excluir um produto
 async function deleteProduct(productId) {
-    if (confirm("Tem certeza que deseja excluir este produto?")) {
-        try {
-            const response = await fetch(`${API_URL}/${productId}`, {
-                method: "DELETE",
-            });
+    const overlayDelete = document.getElementById("overlay_delete");
+    const btnYes = document.getElementById("btn_yes");
+    const btnNo = document.getElementById("btn_no");
 
-            const data = await response.json();
+    // Exibe o popup
+    overlayDelete.style.display = "flex";
 
-            if (response.ok) {
-                showFeedbackMessage(data.message, data.type);
-                loadProducts();
-            } else {
+    return new Promise((resolve) => {
+        
+        btnYes.onclick = async () => {
+            try {
+                const response = await fetch(`${API_URL}/${productId}`, {
+                    method: "DELETE",
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showFeedbackMessage(data.message, data.type);
+                    loadProducts();
+                } else {
+                    showFeedbackMessage("Erro ao excluir produto.", "error");
+                }
+            } catch (error) {
                 showFeedbackMessage("Erro ao excluir produto.", "error");
+                console.error(error);
             }
-        } catch (error) {
-            showFeedbackMessage("Erro ao excluir produto.", "error");
-            console.error(error);
-        }
-    }
+
+            overlayDelete.style.display = "none"; 
+            resolve(); 
+        };
+
+       
+        btnNo.onclick = () => {
+            overlayDelete.style.display = "none";
+            resolve();
+        };
+    });
 }
 
 // Eventos
